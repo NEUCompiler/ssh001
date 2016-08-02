@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	
+	<package name="gdkfdks" namespace="/" extends="struts-default,json-default">
+	 
+		<action name="register" class="com.neu.register.clientTest" method="registerBase">
+		<result name="fail">/index.jsp</result>
+		<result name="success">/GoSuccess.jsp</result>
+		</action>
+		
+		<action name="register1" class="com.neu.register1.clientTest1" method="registerBase1">
+		<result type="json">jsonstr</result>
+		<result name="fail">login.jsp</result>
+		</action>		
+		
+		<action name="register2" class="com.neu.register1.clientTest1" method="username">
+		<result type="json">jsonstr</result>
+		</action>	
+		
+		<action name="login" class="com.neu.maintain.loginTest" method="login">
+		<result name="fail">/login.jsp</result>
+		<result name="success">/success.jsp</result>
+		</action>
+		
+		<action name="changingN" class="com.neu.maintain.changeNameTest" method="change">
+		<result name="fail">/ChangeName.jsp</result>
+		<result name="success">/maintain.jsp</result>
+		</action>
+		
+		<action name="changingP" class="com.neu.maintain.changePasswordTest" method="change">
+		<result name="fail">/login.jsp</result>
+		<result name="success">/maintain.jsp</result>
+		</action>
+		
+		<action name="changingPh" class="com.neu.maintain.changePhoneTest" method="change">
+		<result name="fail">/login.jsp</result>
+		<result name="success">/maintain.jsp</result>
+		</action>
+		
+		<action name="changingM" class="com.neu.maintain.changeMailTest" method="change">
+		<result name="fail">/login.jsp</result>
+		<result name="success">/maintain.jsp</result>
+		</action>
+		
+		<action name="getMoney" class="com.neu.appointment.getMoneyTest" method="GetMoney">
+		<result name="fail">/Appointment.jsp</result>
+		<result name="success">/AppointmentSuccess.jsp</result>
+		</action>
+		
+		<action name="getLoan" class="com.neu.loadcount.LoanCountTest" method="LoadCount">
+			<result type="json">jsonstr</result>
+		</action>	
+		
+		<action name="deposit" class="com.neu.deposit.depositTest" method="DepositCount">
+			<result type="json">jsonstr</result>
+		</action>	
+		
+		<action name="currentdeposit" class="com.neu.deposit.currentDepositTest" method="DepositCount">
+			<result type="json">jsonstr</result>
+		</action>			
+		
+	</package>
+</struts>    
