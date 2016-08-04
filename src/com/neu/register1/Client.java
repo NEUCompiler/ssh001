@@ -4,22 +4,20 @@ package com.neu.register1;
  * Client entity. @author MyEclipse Persistence Tools
  */
 public class Client {
-	private String clientid;
+	private int clientid;
 	private String identityid;
 	private String truename;
-	private String sex;
+	private int sex;
 	private String phone;
 	private String mail;
 	private String accounttype;
 	private String username;
 	private String userpassword;
-
-
-
-	public String getClientid() {
+	
+	public int getClientid() {
 		return clientid;
 	}
-	public void setClientid(String clientid) {
+	public void setClientid(int clientid) {
 		this.clientid = clientid;
 	}
 	public String getIdentityid() {
@@ -35,10 +33,11 @@ public class Client {
 		this.truename = truename;
 	}
 
-	public String getSex() {
+
+	public int getSex() {
 		return sex;
 	}
-	public void setSex(String sex) {
+	public void setSex(int sex) {
 		this.sex = sex;
 	}
 	public String getPhone() {

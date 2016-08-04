@@ -12,9 +12,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.neu.appointment.Bigdeal;
 import com.neu.register.account;
 import com.opensymphony.xwork2.ActionSupport;
-import com.sun.hibernate.Students;
+import com.sun.student.Students;
 
 
 public class clientTest1 extends ActionSupport{
@@ -29,31 +30,32 @@ public class clientTest1 extends ActionSupport{
 	private String userpassword;
 	private String jsonstr;
 	private String remind;
+	private int variable;
 
+	
+	public int getVariable() {
+		return variable;
+	}
+
+	public void setVariable(int variable) {
+		this.variable = variable;
+	}
 
 	public String getClientid() {
 		return clientid;
 	}
 
-
-
 	public void setClientid(String clientid) {
 		this.clientid = clientid;
 	}
-
-
 
 	public String getIdentityid() {
 		return identityid;
 	}
 
-
-
 	public void setIdentityid(String identityid) {
 		this.identityid = identityid;
 	}
-
-
 
 	public String getTruename() {
 		return truename;
@@ -172,6 +174,24 @@ public class clientTest1 extends ActionSupport{
 		Query query =  session1.createQuery("from Client WHERE username = ?");
 		query.setString(0, username+"");
 		java.util.List Client;
+		
+		
+		Query query1=session1.createQuery("from Client");
+		
+		java.util.List Client1;
+		try{
+			Client1 = query1.list();
+		}catch(Exception e){
+			e.printStackTrace();
+			return "fail";
+		}
+	
+    	Iterator iter1 = Client1.iterator();
+    	while(iter1.hasNext()){
+    		Client bd = (Client)iter1.next();
+    		variable=bd.getClientid();
+    	}
+		
 		try{
 			Client = query.list();
 		}catch(Exception e){
@@ -180,19 +200,25 @@ public class clientTest1 extends ActionSupport{
 		}
 			
 		
+		
     	Iterator iter = Client.iterator();
     	
 		if(Client.isEmpty())
 		{
 	    	    Client s= new Client();
-	    	    String str = UUID.randomUUID().toString();
-				s.setClientid(str);	
+	    	    String str = UUID.randomUUID().toString();  	    
+				s.setClientid(variable+1);	
 				s.setIdentityid(identityid);
 				s.setTruename(truename);
-				s.setSex(sex);
+				if(sex =="ÄÐ"){
+					s.setSex(1);									
+				}else{
+					s.setSex(0);
+				}
+
 				s.setPhone(phone);
 				s.setMail(mail);
-				s.setAccounttype(" ");
+				s.setAccounttype("0");
 				s.setUsername(username);
 				s.setUserpassword(userpassword);
 				

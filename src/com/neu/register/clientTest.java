@@ -12,7 +12,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.sun.hibernate.Students;
+import com.sun.student.Students;
 
 public class clientTest{
 	private String accountid;

@@ -1,4 +1,4 @@
-package com.sun.hibernate;
+package com.sun.student;
  
 public class Students {
     private int id;

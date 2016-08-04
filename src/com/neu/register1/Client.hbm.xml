@@ -6,7 +6,7 @@
 -->
 <hibernate-mapping>
     <class name="com.neu.register1.Client" table="client" catalog="hibernate">
-        <id name="clientid" type="java.lang.String">
+        <id name="clientid" type="java.lang.Integer">
             <column name="clientid" />
             <generator class="assigned" />
         </id>
@@ -16,7 +16,7 @@
         <property name="truename" type="java.lang.String">
             <column name="truename" length="10" not-null="true" />
         </property>
-        <property name="sex" type="java.lang.String">
+        <property name="sex" type="java.lang.Integer">
             <column name="sex" not-null="true" />
         </property>
         <property name="phone" type="java.lang.String">

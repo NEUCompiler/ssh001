@@ -11,7 +11,7 @@
 		
 		<action name="register1" class="com.neu.register1.clientTest1" method="registerBase1">
 		<result type="json">jsonstr</result>
-		<result name="fail">login.jsp</result>
+		<result name="fail">login1.jsp</result>
 		</action>		
 		
 		<action name="register2" class="com.neu.register1.clientTest1" method="username">

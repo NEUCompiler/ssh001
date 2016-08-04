@@ -151,7 +151,7 @@ public void setWebsite(String website) {
 
   			    Query q=session1.createSQLQuery(sql);
 				q.setString(0,str);
-				q.setString(1,cn.getClientid());
+				q.setInteger(1, cn.getClientid());
 				money1=Integer.toString(money);
 				q.setString(2,money1);
 				q.setString(3,date);
