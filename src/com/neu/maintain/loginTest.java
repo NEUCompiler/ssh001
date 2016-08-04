@@ -102,18 +102,18 @@ public class loginTest {
     	Iterator iter = client.iterator();
 
     	if(client.isEmpty()){
-    		request.setAttribute("info", "");
+    		request.setAttribute("info", "用户名或密码错误");
     		return "fail";
     	}else{
     			Client pw = (Client)iter.next();
 	    		if(pw.getUserpassword().equals(userpassword)){
 	    			
 	    		ActionContext.getContext().getSession().put("user", getUsername());
-	    		ActionContext.getContext().getSession().put("password",getUsername());	
+	    		ActionContext.getContext().getSession().put("password",getUserpassword());	
 	    			return "success";
 	    		}
 	    		else{
-	    			request.setAttribute("info","");
+	    			request.setAttribute("info","用户名或密码错误");
 	    	    	return "fail";
 	    		}
     	}

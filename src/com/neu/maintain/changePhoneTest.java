@@ -2,6 +2,9 @@ package com.neu.maintain;
 
 import java.util.Iterator;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,8 +15,11 @@ import com.neu.register1.Client;
 import com.opensymphony.xwork2.ActionContext;
 
 public class changePhoneTest {
-	
+private String oldphone;	
 private String changevariable;
+
+HttpServletRequest request=ServletActionContext.getRequest();
+
 
 	public String getChangevariable() {
 	return changevariable;
@@ -21,6 +27,14 @@ private String changevariable;
 
 public void setChangevariable(String changevariable) {
 	this.changevariable = changevariable;
+}
+
+	public String getOldphone() {
+	return oldphone;
+}
+
+public void setOldphone(String oldphone) {
+	this.oldphone = oldphone;
 }
 
 	public String change(){
@@ -51,13 +65,18 @@ public void setChangevariable(String changevariable) {
     	if(client.isEmpty()){
     		return "fail";
     	}else{
-    		
     			Client cn = (Client)iter.next();
-				session2.beginTransaction();
-				cn.setPhone(changevariable);
-				session2.update(cn);	
-				session2.getTransaction().commit();							
-	    		return "success";
-	    		}
+    			if(cn.getPhone().equals(oldphone)){
+    				session2.beginTransaction();
+    				cn.setPhone(changevariable);
+    				session2.update(cn);	
+    				session2.getTransaction().commit();							
+    	    		return "success";
+    			}else{
+    				request.setAttribute("info", "¾ÉÊÖ»úºÅ´íÎó£¡");
+    				return "fail";
+    			}
+
+	     }
     }
 }

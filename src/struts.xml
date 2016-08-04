@@ -28,18 +28,22 @@
 		<result name="success">/maintain.jsp</result>
 		</action>
 		
+		<action name="changingN2" class="com.neu.maintain.changeNameTest" method="username1">
+		<result type="json">jsonstr</result>
+		</action>		
+		
 		<action name="changingP" class="com.neu.maintain.changePasswordTest" method="change">
-		<result name="fail">/login.jsp</result>
+		<result name="fail">/ChangePassword.jsp</result>
 		<result name="success">/maintain.jsp</result>
 		</action>
 		
 		<action name="changingPh" class="com.neu.maintain.changePhoneTest" method="change">
-		<result name="fail">/login.jsp</result>
+		<result name="fail">/ChangePhone.jsp</result>
 		<result name="success">/maintain.jsp</result>
 		</action>
 		
 		<action name="changingM" class="com.neu.maintain.changeMailTest" method="change">
-		<result name="fail">/login.jsp</result>
+		<result name="fail">/ChangeMail.jsp</result>
 		<result name="success">/maintain.jsp</result>
 		</action>
 		

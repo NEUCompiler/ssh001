@@ -25,6 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
 		
 	<h1>预约成功</h1>
+	<h1>请于${request.info}到柜台取款 </h1>
 	
   </body>
 </html>

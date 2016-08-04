@@ -7,7 +7,7 @@
 <hibernate-mapping>
     <class name="com.neu.loadcount.Loan" table="loan" catalog="hibernate">
         <id name="key" type="java.lang.String">
-            <column name="key" length="40" />
+            <column name="loankey" length="40" />
             <generator class="assigned" />
         </id>
         <property name="type" type="java.lang.String">

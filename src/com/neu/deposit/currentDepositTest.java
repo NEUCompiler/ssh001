@@ -1,5 +1,6 @@
 package com.neu.deposit;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,23 +14,25 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class currentDepositTest extends ActionSupport  {
 	private int amount;
-	private int exectlytime;
 	private String jsonstr;
 	private float interest;
 	private float revenue;
 	private float total;
 	private float average;
+	private int intDays;
+	
+	
+	public int getIntDays() {
+		return intDays;
+	}
+	public void setIntDays(int intDays) {
+		this.intDays = intDays;
+	}
 	public int getAmount() {
 		return amount;
 	}
 	public void setAmount(int amount) {
 		this.amount = amount;
-	}
-	public int getExectlytime() {
-		return exectlytime;
-	}
-	public void setExectlytime(int exectlytime) {
-		this.exectlytime = exectlytime;
 	}
 	public String getJsonstr() {
 		return jsonstr;
@@ -63,7 +66,7 @@ public class currentDepositTest extends ActionSupport  {
 	}
 	public String DepositCount(){
 		try{
-			System.out.println("11111111111111");
+//			System.out.println("888888888888");
 			ApplicationContext c = new ClassPathXmlApplicationContext(
 					"applicationContext.xml");
 			SessionFactory sf = (SessionFactory) c.getBean("sessionFactory");
@@ -89,13 +92,13 @@ public class currentDepositTest extends ActionSupport  {
 				Deposit cn = (Deposit) iter.next();
 
 				System.out.println(cn.getRate());
-				System.out.println(exectlytime);
+				System.out.println(intDays);
 				System.out.println(amount);
 				
-				interest=cn.getRate()*exectlytime*amount/12;
+				interest=cn.getRate()*intDays*amount/12;
 				revenue=interest*cn.getInterest();
 				total=interest-revenue+amount;
-				average=total/exectlytime;
+				average=total/intDays;
 				}
 				
 				try {

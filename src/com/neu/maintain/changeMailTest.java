@@ -2,6 +2,9 @@ package com.neu.maintain;
 
 import java.util.Iterator;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,12 +16,27 @@ import com.opensymphony.xwork2.ActionContext;
 
 public class changeMailTest {
 
-	
+private String oldmail;
 private String changevariable;
-
+HttpServletRequest request=ServletActionContext.getRequest();
+	
 	
 
-	
+
+	public String getOldmail() {
+		return oldmail;
+	}
+
+
+
+
+	public void setOldmail(String oldmail) {
+		this.oldmail = oldmail;
+	}
+
+
+
+
 	public String getChangevariable() {
 		return changevariable;
 	}
@@ -63,11 +81,17 @@ private String changevariable;
     	}else{
     		
     			Client cn = (Client)iter.next();
-				session2.beginTransaction();
-				cn.setMail(changevariable);
-				session2.update(cn);	
-				session2.getTransaction().commit();							
-	    		return "success";
+    			if(cn.getMail().equals(oldmail)){
+    				session2.beginTransaction();
+    				cn.setMail(changevariable);
+    				session2.update(cn);	
+    				session2.getTransaction().commit();							
+    	    		return "success";
+    			}else{
+    				request.setAttribute("info", "æ…” œ‰¥ÌŒÛ");
+    	    		return "fail";		
+    				}
+				
 	    		}
     }
 }

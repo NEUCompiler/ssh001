@@ -31,18 +31,55 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				border:blue solid 2px;
 			}
 		</style>
-
+		<script type="text/javascript">
+			window.onload=function (){
+			
+			var ainput=document.getElementsByTagName("input");
+			var mail=ainput[1];
+			
+			var aP=document.getElementsByTagName("p");
+			var mail_msg=aP[0];
+			mail.onfocus=function (){
+					mail_msg.style.display="block";
+					mail_msg.innerHTML="<strong style='color: blue;'>不少于7个字符并超过20字符，例如：(eg.925781291@qq.com）</strong> "	
+				}
+				mail.onchange=function (){
+				var reg=/^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+					if(this.value==""){
+						alert("邮箱为空");
+						return;
+					}else if(!reg.test(this.value)){
+						alert("邮箱格式不正确！");	
+						return;
+					}else if(this.value.length<7){
+						alert("邮箱少于7字符");								
+						return;	
+					}
+					else if(this.value.length>20){
+						alert("邮箱超过20字符");								
+						return;	
+					}else{
+						mail_msg.innerHTML="<strong style='color: blue;'>OK</strong> "
+					}
+				}
+			}
+		
+		
+		</script>
 
   </head>
   
   <body>
     <div id="div1">
-		<form action="<%=path%>/changingM" method="get">		
-		请输入修改后的邮箱<br>   
-		<input name="changevariable" type="text"> <br><br>	
+		<form action="<%=path%>/changingM" method="get">	
+		请输入旧邮箱<br>   
+		<input name="oldmail" type="text"> <br><br>		
+		请输入新邮箱<br>   
+		<input name="changevariable" type="text"><p></p>
 		<input type="submit" value="提交" style="width: 80px;
 			background:deepskyblue;"> <br>
 		</form>
+		${request.info}
 	</div>
   </body>
 </html>

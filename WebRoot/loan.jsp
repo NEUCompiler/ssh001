@@ -71,15 +71,61 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					}	
 				});
 		}
+		
+			window.onload=function(){
+		var ainput=document.getElementsByTagName("input");
+		var amount=ainput[0];	
+		var time=ainput[1];	
+		var aP=document.getElementsByTagName("p");
+		var amount_msg=aP[0];
+		var time_msg=aP[1];
+		amount.onfocus=function (){
+			amount_msg.style.display="block";
+			amount_msg.innerHTML="只能是整型数字";	
+		}
+		
+		amount.onchange=function (){	
+			var re_n=/[^\d]/g;					
+			if(this.value==""){
+				alert("存款金额不能为空");
+				return;
+			}else if(re_n.test(this.value)){
+				alert("含有非法字符!");
+				return;				
+			}else{
+				amount_msg.innerHTML="<strong style='color:blue'>OK!</strong>";	
+			}
+		}
+		
+		time.onfocus=function (){
+			time_msg.style.display="block";
+			time_msg.innerHTML="单位是：月份,只能是整型数字";	
+		}
+		
+		time.onchange=function (){	
+			var re_n=/[^\d]/g;					
+			if(this.value==""){
+				alert("存款时间不能为空");
+				return;
+			}else if(re_n.test(this.value)){
+				alert("含有非法字符!");
+				return;				
+			}else{
+				time_msg.innerHTML="<strong style='color:blue'>OK!</strong>";	
+			}
+		}		
+			
+	}
+		
 		</script>
   </head>
   
   <body>
   	 <div id="div1">
- 
+ 				<h1>贷款计算器</h1>
   	 		<span style="color: blue;">贷款金额</span>
   			<input id="amount" name="amount" type="text"/>
-  			<br><br />
+  			<p></p>
 	  		<span style="color: blue;margin-left: -90px;">贷款类型</span>
 			<select id="type" name="type" >
 	    			<option value="houseload">房贷</option>
@@ -95,7 +141,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	</select> 
 	    	<br><br>
 	    	<span style="color: blue;">贷款时间</span>
-	    	<input id="exectlytime" name="exectlytime" type="text"/>   <br><br>
+	    	<input id="exectlytime" name="exectlytime" type="text"/>  <p></p>
 	    	
 	    	
 	    	<input id="count" type="button" onclick="test()" value="计算" style="width: 80px;

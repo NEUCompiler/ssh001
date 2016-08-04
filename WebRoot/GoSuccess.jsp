@@ -44,10 +44,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					dataType: 'json', 
 					success:function(data){			
 						var aa = data.remind;
-						$("#remind1").prop("innerHTML", aa);	 
+						if(aa=="用户名已存在"){
+						alert("用户名已存在");
+						return;
+						}else{
+						$("#remind1").prop("innerHTML", aa);
+						}		 
 					}	
 			});
 		};
+
+		
+		function findStr(str,n){
+			var temp;
+			for (var i=0;i<str.length;i++) {
+				if(str.charAt(i)==n){
+					temp++;
+				}
+			}
+			return temp;
+		}
 
 		window.onload=function (){
 				var ainput=document.getElementsByTagName("input");
@@ -69,13 +85,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var pwd_msg=aP[5];
 				var pwd2_msg=aP[6];
 				
+				truename.onfocus=function (){
+					truename_msg.style.display="block";
+					truename_msg.innerHTML="不能为空";		
+				}
+					
+				truename.onchange=function (){									
+					if(this.value==""){
+						alert("真实姓名为空");
+						return;
+					}else{
+						truename_msg.innerHTML="<strong style='color:blue'>OK!</strong>";	
+					}
+				}				
+				
 				username.onfocus=function (){
 					username_msg.style.display="block";
 					username_msg.innerHTML="3-20个字符,(汉字字母均表示一个字符)";		
 				}
-				username.onblur=function (){
-					var  re=/[^\w\u4e00-\u9fa5]/g;
-					
+				username.onchange=function (){
+					var  re=/[^\w\u4e00-\u9fa5]/g;		
 					if(this.value==""){
 						alert("用户名为空");
 						return;
@@ -95,22 +124,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						return;
 					}
 					else{
-						username_msg.innerHTML="<strong style='color:blue'>OK！</strong>";
+						test1(this.value);
 					}
 				}
 				
 				identityid.onfocus=function (){
 					identityid_msg.style.display="block";
-					identityid_msg.innerHTML="15位或者18位由数字和字符组成";		
+					identityid_msg.innerHTML="18位由数字和字符组成";		
 				}
-				identityid.onblur=function (){
+				identityid.onchange=function (){
 					var re_n=/[^A-Za-z0-9]/g;
 					if(this.value==""){
 						alert("身份证号为空!"); 	
 						return;					
 					}
-					else if(this.value.length!=18||this.value.length!=15){
+					else if(this.value.length!=18){
 						alert("身份证号位数不对！");
+						return;
 					}
 					else if(re_n.test(this.value))
 					{
@@ -124,9 +154,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				
 				phone.onfocus=function (){
 					phone_msg.style.display="block";
-					phone_msg.innerHTML="15位或者18位由数字和字符组成";		
+					phone_msg.innerHTML="11位由数字和字符组成";		
 				}
-				phone.onblur=function (){
+				phone.onchange=function (){
 					var re_n=/[^\d]/g;
 					if(this.value==""){
 						alert("手机号号为空!"); 	
@@ -142,21 +172,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						return;
 					}
 					else{
-						identityid_msg.innerHTML="<strong style='color:blue'>OK！</strong>";
+						phone_msg.innerHTML="<strong style='color:blue'>OK！</strong>";
 					}	
 				}
 				
 				
 				mail.onfocus=function (){
 					mail_msg.style.display="block";
-					mail_msg.innerHTML="<strong style='color: blue;'>不超过20字符，例如：(eg.925781291@qq.com）</strong> "	
+					mail_msg.innerHTML="<strong style='color: blue;'>不少于7个字符并超过20字符，例如：(eg.925781291@qq.com）</strong> "	
 				}
-				mail.onblur=function (){
+				mail.onchange=function (){
+				var reg=/^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
 					if(this.value==""){
 						alert("邮箱为空");
 						return;
-					}else if(this.value.length>20){
-						alert("邮箱超过二十字符");								
+					}else if(!reg.test(this.value)){
+						alert("邮箱格式不正确！");	
+						return;
+					}else if(this.value.length<7){
+						alert("邮箱少于7字符");								
+						return;	
+					}
+					else if(this.value.length>20){
+						alert("邮箱超过20字符");								
 						return;	
 					}else{
 						mail_msg.innerHTML="<strong style='color: blue;'>OK</strong> "
@@ -168,47 +206,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					pwd_msg.style.display="block";
 					pwd_msg.innerHTML="6-16个字符，字母数字或者符号的组合，不能单独使用字母数字或者符号"		
 				}
-				pwd.onkeyup=function(){
-					if(this.value.length>5){
-						pwd2.removeAttribute("disabled");
-						pwd2_msg.style.display="block";
-					}
-					else{
-						pwd2.setAttribute("disabled");
-					}	
-				}
-				pwd.onblur=function(){
+				pwd.onchange=function(){
 					var m=findStr(pwd.value,pwd.value[0]);
 					var re_n=/[^\d]/g;
 					var re_t=/[^a-zA-Z]/g;
 					if(this.value==""){
-						pwd_msg.innerHTML="不能为空";
+						alert("不能为空");
+						return;
 					}
 					else if(this.value.length==m){
-						pwd_msg.innerHTML="字符不能都相同";
+						alert("字符不能都相同");
+						return;
 					}
 					else if(this.value.length<6||this.value.length>26){
-						pwd_msg.innerHTML="字符长度应为6——16";
+						alert("字符长度应为6——16");
+						return;					
 					}
 					else if(!re_n.test(this.value)){
-						pwd_msg.innerHTML="不能全为数字";
+						alert("不能全为数字");
+						return;						
 					}
 					
 					else if(!re_t.test(this.value)){
-						pwd_msg.innerHTML="不能全为字母";
+						alert("不能全为字母");
+						return;						
 					}
-					else{
-						pwd_msg.innerHTML="OK";
+					else{				
+						pwd_msg.innerHTML="<strong style='color: blue;'>OK</strong>";
 					}
 				}
-				pwd2.onblur=function (){
+				pwd2.onchange=function (){
 					if(this.value!=pwd.value){
-						pwd2_msg.innerHTML="<i style='background-position: 0-39px;'>两次输入的密码不一致！！</i>";
+						alert("两次输入的密码不一致！！");
+					}else{
+						pwd2_msg.innerHTML="<strong style='color: blue;'>OK</strong>";
 					}
 				}		
-				
-				
-				
 		}
 	
 		</script>
@@ -217,12 +250,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
 		<div id="div1">
-			<!-- <form action="<%=path%>/register1" method="get"> -->
+			<form action="<%=path%>/register1" method="get">
 					
 				真实姓名
 				<input id="truename" name="truename" type="text">	<p></p>
 				 用 户 名
-				<input id="username" name="username" type="text" onchange="test1(this.value)">	<p id="remind1"></p>			
+				<input id="username" name="username" type="text">	<p id="remind1"></p>			
 				身份证号
 				<input id="identityid" name="identityid" type="text"><p></p>
 				手 机 号
@@ -242,11 +275,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			              密码验证
 			    <input id="userpassword1" name="userpassword1" type="password"><p></p>  <br>
 			    
-				<input id="submit" type="button" value="注册" style="width: 80px;
+				<input id="submit" type="submit" value="注册" style="width: 80px;
 				background:deepskyblue;"> <br>
 
-				<!-- </form>   ${request.info}
-				-->	
+			</form> 
+				
 					
 		</div>
 		

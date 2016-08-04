@@ -1,9 +1,14 @@
 package com.neu.appointment;
 
-import java.sql.Date;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,21 +21,45 @@ import com.opensymphony.xwork2.ActionContext;
 public class getMoneyTest {
 
 	
-private String money;
+private int money;
 private String date;
 private String website;
+private int variable;
+private String money1;
+private Date now;
 	
+HttpServletRequest request=ServletActionContext.getRequest();
 
 
+public Date getNow() {
+	return now;
+}
 
-	public String getMoney() {
+public void setNow(Date now) {
+	this.now = now;
+}
+
+public String getMoney1() {
+	return money1;
+}
+
+public void setMoney1(String money1) {
+	this.money1 = money1;
+}
+
+public int getVariable() {
+	return variable;
+}
+
+public void setVariable(int variable) {
+	this.variable = variable;
+}
+
+public int getMoney() {
 	return money;
 }
 
-
-
-
-public void setMoney(String money) {
+public void setMoney(int money) {
 	this.money = money;
 }
 
@@ -62,9 +91,6 @@ public void setWebsite(String website) {
 	this.website = website;
 }
 
-
-
-
 	public String GetMoney(){
 		ApplicationContext c1 = new ClassPathXmlApplicationContext("applicationContext.xml");  
 		SessionFactory sf1 = (SessionFactory) c1.getBean("sessionFactory");
@@ -81,41 +107,60 @@ public void setWebsite(String website) {
 			e.printStackTrace();
 			return "fail";
 		}
+		
+		
+		
+		ApplicationContext c = new ClassPathXmlApplicationContext("applicationContext.xml");  
+		SessionFactory sf = (SessionFactory) c.getBean("sessionFactory");
+		Session session = sf.openSession();
+		
+		Query query1 =  session.createQuery("from com.neu.appointment.Bigdeal");
+		java.util.List bigdeal;
+		try{
+			bigdeal = query1.list();
+		}catch(Exception e){
+			e.printStackTrace();
+			return "fail";
+		}
 	
     	Iterator iter = client.iterator();
-		
+    	Iterator iter1 = bigdeal.iterator();
+    	while(iter1.hasNext()){
+    		Bigdeal bd = (Bigdeal)iter1.next();
+    		if(money > bd.getAmount()) 
+    			variable=bd.getAheadtime();
+    		else
+    			break;
+    	}
+    	
+    	  Date now=new Date();
+    	  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    	  Calendar cal = Calendar.getInstance();
+    	  cal.add(Calendar.DATE, variable);
+    	  
+    	  date= dateFormat.format(cal.getTime());
+
 	    Appointment s= new Appointment();
 	    if(client.isEmpty()){
     		return "fail";
     	}else{
     		Client cn = (Client)iter.next();
     		String str = UUID.randomUUID().toString();
-    	   /* s.setAppointid(str);			
-			s.setClientid(cn.getClientid());
-			s.setAmount(money);
-			s.setWebsiteid(website);
-			s.setDate(date);*/
 			
-			String sql = "insert into hibernate.appointment (appointid, clientid, amount, date, websiteid) values (?,?,?,str_to_date(?, '%m/%d/%Y'),?)";
+			String sql = "insert into hibernate.appointment (appointid, clientid, amount, date, websiteid) values (?,?,?,str_to_date(?, '%Y/%m/%d'),?)";
 
-			//	s=getCurrentSession();
   			    Query q=session1.createSQLQuery(sql);
 				q.setString(0,str);
 				q.setString(1,cn.getClientid());
-				q.setString(2,money);
+				money1=Integer.toString(money);
+				q.setString(2,money1);
 				q.setString(3,date);
 				q.setString(4,website);
 			    session1.beginTransaction();
 				q.executeUpdate();
 				session1.getTransaction().commit();	
+				request.setAttribute("info", date);
 				return "success"; 
-			/*
-			session1.beginTransaction();
-			session1.save(s);
-			session1.getTransaction().commit();
-			session1.close();
-			sf1.close(); 
-			return "success";  */
     	}
 	}
 }

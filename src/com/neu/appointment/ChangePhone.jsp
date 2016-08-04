@@ -31,18 +31,53 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				border:blue solid 2px;
 			}
 		</style>
-
+		<script type="text/javascript">
+			window.onload=function (){
+				var ainput=document.getElementsByTagName("input");
+				var phone=ainput[1];
+				
+				var aP=document.getElementsByTagName("p");
+				var phone_msg=aP[0];
+				
+				phone.onfocus=function (){
+					phone_msg.style.display="block";
+					phone_msg.innerHTML="11位由数字和字符组成";		
+				}
+				phone.onchange=function (){
+					var re_n=/[^\d]/g;
+					if(this.value==""){
+						alert("手机号号为空!"); 	
+						return;					
+					}
+					else if(this.value.length!=11){
+						alert("手机号位数不对！");
+						return;
+					}
+					else if(re_n.test(this.value))
+					{
+						alert("含有非法字符!");
+						return;
+					}
+					else{
+						phone_msg.innerHTML="<strong style='color:blue'>OK！</strong>";
+					}	
+				}
+			}
+		</script>
 
   </head>
   
   <body>
     <div id="div1">
-		<form action="<%=path%>/changingPh" method="get">		
-		请输入修改后的手机号<br>   
-		<input name="changevariable" type="text"> <br><br>	
+		<form action="<%=path%>/changingPh" method="get">	
+		请输入旧手机号<br>
+		<input name="oldphone" type="text"> <br><br>				
+		请输入新手机号<br>   
+		<input name="changevariable" type="text"><p></p>
 		<input type="submit" value="提交" style="width: 80px;
 			background:deepskyblue;"> <br>
 		</form>
+		${request.info}
 	</div>
   </body>
 </html>

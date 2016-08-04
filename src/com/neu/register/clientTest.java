@@ -221,7 +221,7 @@ public class clientTest{
     	Iterator iter = account.iterator();
 		
 		if(account.isEmpty()){
-			request.setAttribute("info", "浠ュ強琚敞鍐屾垨鑰呬笉瀛樺湪");
+			request.setAttribute("info", "此卡已开通或者输入有误");
 			
 //			System.out.println("account.isEmpty");
 			return "fail";
@@ -255,7 +255,7 @@ public class clientTest{
 					client.setIsopenob(1);
 					session.update(client);	
 					session.getTransaction().commit();	
-					request.setAttribute("info", "娉ㄥ唽鎴愬姛");
+					request.setAttribute("info", "此卡开通成功");
 					return "fail";
 				}				
 			} else {

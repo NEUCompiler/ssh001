@@ -2,6 +2,9 @@ package com.neu.maintain;
 
 import java.util.Iterator;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,10 +16,24 @@ import com.opensymphony.xwork2.ActionContext;
 
 public class changePasswordTest {
 	private String changevariable;
-
+	private String oldpassword;
 	
-
+	HttpServletRequest request=ServletActionContext.getRequest();	
 	
+	public String getOldpassword() {
+		return oldpassword;
+	}
+
+
+
+
+	public void setOldpassword(String oldpassword) {
+		this.oldpassword = oldpassword;
+	}
+
+
+
+
 	public String getChangevariable() {
 		return changevariable;
 	}
@@ -39,7 +56,7 @@ public class changePasswordTest {
 		
 		
 		String user = ActionContext.getContext().getSession().get("user")+"";
-//		int password = Integer.valueOf(ActionContext.getContext().getSession().get("password")+"");
+		String password = ActionContext.getContext().getSession().get("password")+"";
 
 		
 		Query query =  session2.createQuery("from Client WHERE username = ?");
@@ -53,12 +70,11 @@ public class changePasswordTest {
 			e.printStackTrace();
 			return "fail";
 		}
-	
     	Iterator iter = client.iterator();
-
+    	System.out.println(password);
+    	System.out.println(oldpassword);
+    if(password.equals(oldpassword)){
     	if(client.isEmpty()){
-    		
-    		
     		return "fail";
     	}else{
     		
@@ -69,6 +85,11 @@ public class changePasswordTest {
 				session2.update(cn);	
 				session2.getTransaction().commit();							
 	    		return "success";
-	    		}
+	    	}
+    	}else{
+    		request.setAttribute("info", "æ…√‹¬Î”–ŒÛ£°");
+    		return "fail";
+    	}	
+    	
     }
 }

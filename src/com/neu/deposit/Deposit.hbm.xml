@@ -7,7 +7,7 @@
 <hibernate-mapping>
     <class name="com.neu.deposit.Deposit" table="deposit" catalog="hibernate">
         <id name="key" type="java.lang.Integer">
-            <column name="key" />
+            <column name="depositkey" />
             <generator class="assigned" />
         </id>
         <property name="rate" type="java.lang.Float">

@@ -165,8 +165,6 @@ public class clientTest1 extends ActionSupport{
 
 
 	public String registerBase1(){
-			
-		System.out.println("22222222222");
 		ApplicationContext c1 = new ClassPathXmlApplicationContext("applicationContext.xml");  
 		SessionFactory sf1 = (SessionFactory) c1.getBean("sessionFactory");
 		Session session1 = sf1.openSession();
@@ -183,8 +181,6 @@ public class clientTest1 extends ActionSupport{
 			
 		
     	Iterator iter = Client.iterator();
-    	
-   // 	account client = (account)iter.next();
     	
 		if(Client.isEmpty())
 		{
@@ -246,7 +242,7 @@ public class clientTest1 extends ActionSupport{
     	String str = "";
 		if(Client.isEmpty())
 		{
-			remind="yes";
+			remind="OK";
 			try {
 				str = "{data:[{remind:" + remind + "\"}   ]}";
 			} catch (Exception e) {

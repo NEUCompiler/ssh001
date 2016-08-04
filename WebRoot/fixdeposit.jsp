@@ -72,6 +72,51 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					}	
 				});
 		}
+		
+	window.onload=function(){
+		var ainput=document.getElementsByTagName("input");
+		var amount=ainput[0];	
+		var time=ainput[1];	
+		var aP=document.getElementsByTagName("p");
+		var amount_msg=aP[0];
+		var time_msg=aP[1];
+		amount.onfocus=function (){
+			amount_msg.style.display="block";
+			amount_msg.innerHTML="只能是整型数字";	
+		}
+		
+		amount.onchange=function (){	
+			var re_n=/[^\d]/g;					
+			if(this.value==""){
+				alert("存款金额不能为空");
+				return;
+			}else if(re_n.test(this.value)){
+				alert("含有非法字符!");
+				return;				
+			}else{
+				amount_msg.innerHTML="<strong style='color:blue'>OK!</strong>";	
+			}
+		}
+		
+		time.onfocus=function (){
+			time_msg.style.display="block";
+			time_msg.innerHTML="单位是：月份,只能是整型数字";	
+		}
+		
+		time.onchange=function (){	
+			var re_n=/[^\d]/g;					
+			if(this.value==""){
+				alert("存款时间不能为空");
+				return;
+			}else if(re_n.test(this.value)){
+				alert("含有非法字符!");
+				return;				
+			}else{
+				time_msg.innerHTML="<strong style='color:blue'>OK!</strong>";	
+			}
+		}		
+			
+	}
 	</script>		
 
   </head>
@@ -81,7 +126,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<h1>定期存款计算器</h1>
 	  	<span style="color: blue;">存款金额</span>
 	  	<input id="amount" name="amount" type="text"/>
-	  	<br><br />
+	  	<p></p>
 	  
 	    <span style="color: blue;margin-left:-150px">存款期限</span>
 	  		<select id="time" name="time" >
@@ -93,16 +138,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	 
     	<span style="color: blue;">存款时间</span>
 	  	<input id="exectlytime" name="time" type="text"/>
-	  	<br><br>
+	  	<p></p>
 	  	
     	<input id="count" type="button" onclick="test()" value="计算" style="width: 80px;
 			background:deepskyblue;"> <br>
     
-  		<p id="interest" style="margin-left: -200px; color: blue;">利息(元):</p>
-		<p id="revenue" style="margin-left: -180px; color: blue;">利息税(元)：</p>
-		<p id="total" style="margin-left: -200px; color: blue;">总额(元)：</p>
-		<!--<p id="average" style="margin-left: -200px; color: blue;">平均每月应还金额(元)：</p>  -->
-		
+  		<p id="interest" style="margin-left: -100px; color: red;">利息(元):</p>
+		<p id="revenue" style="margin-left: -100px; color: red;">利息税(元)：</p>
+		<p id="total" style="margin-left: -100px; color: red;">总额(元)：</p>
+		<!--<p id="average" style="margin-left: -200px; color: blue;">平均每月应还金额(元)：</p>  -->		
 		</div>
   </body>
 </html>

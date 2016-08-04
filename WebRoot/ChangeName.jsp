@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+b<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
+		<script type="text/JavaScript" src="jquery.js"></script>
 	<style>
 			#div1{
 				text-align: center;
@@ -32,15 +32,77 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				border:blue solid 2px;
 			}
 		</style>
+		<script>
+		
+				function test1(username){
+				var url = "<%=path%>/changingN2";	
+				$.ajax({ 
+					type:'post', 
+					url:url, 
+					data : {
+						username:username,
+					},
+					dataType: 'json', 
+					success:function(data){			
+						var aa = data.remind;
+						if(aa=="用户名已存在"){
+						alert("用户名已存在");
+						return;
+						}else{
+						$("#remind1").prop("innerHTML", aa);
+						}		 
+					}	
+			});
+		};
+		
+			window.onload=function (){
+				var ainput=document.getElementsByTagName("input");
+				var username=ainput[1];
+				
+				var aP=document.getElementsByTagName("p");
+				var username_msg=aP[0];			
+				
+				username.onfocus=function (){
+					username_msg.style.display="block";
+					username_msg.innerHTML="3-20个字符,(汉字字母均表示一个字符)";		
+				}
+				username.onchange=function (){
+					var  re=/[^\w\u4e00-\u9fa5]/g;		
+					if(this.value==""){
+						alert("用户名为空");
+						return;
+					}
+					
+					else if(re.test(this.value)){
+						alert("含有非法字符！");
+						return;
+					}
+					
+					else if(this.value.length>20){
+						alert("超过20个字符");
+						return;
+					}
+					else if(this.value.length<3){
+						alert("少于3个字符");
+						return;
+					}
+					else{
+						test1(this.value);
+					}
+				}
+			}
+		</script>		
 		
   </head>
   
   <body>
 		
 		<div id="div1">
-		<form action="<%=path%>/changingN" method="get">		
-		请输入改变后得的用户名<br>   
-		<input name="changevariable" type="text"> <br><br>	
+		<form action="<%=path%>/changingN" method="get">
+		请输入旧用户名<br>
+		<input name="oldname" type="text"> <br><br>			
+		请输入新用户名<br>   
+		<input name="changevariable" type="text"> <p id="remind1"></p>	
 		<input type="submit" value="提交" style="width: 80px;
 			background:deepskyblue;"> <br>
 		</form>

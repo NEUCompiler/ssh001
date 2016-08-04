@@ -35,7 +35,8 @@
 				<value>com/neu/register1/Client.hbm.xml</value>
 				<value>com/neu/appointment/Appointment.hbm.xml</value>
 				<value>com/neu/loadcount/Loan.hbm.xml</value>
-				<value>com/neu/deposit/Deposit.hbm.xml</value></list>
+				<value>com/neu/deposit/Deposit.hbm.xml</value>
+				<value>com/neu/appointment/Bigdeal.hbm.xml</value></list>
 		</property>
 	</bean>
 	
